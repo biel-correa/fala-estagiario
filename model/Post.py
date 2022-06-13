@@ -15,6 +15,10 @@ class Post:
         return post_list
     
     @classmethod
+    def get_ordered_by_date(self):
+        return sorted(post_list, key=lambda x: x.__date, reverse=True)
+    
+    @classmethod
     def save(cls, content, author):
         if len(content) > 200:
             raise ValueError("Conteúdo muito grande")
