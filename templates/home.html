@@ -5,7 +5,8 @@
 {% block style %}
     <style>
         .card {
-            min-width: 18rem;
+            min-width: calc((100% / 3) - 1rem);
+            max-width: calc((100% / 3 * 2) - 1rem);
         }
     </style>
 {% endblock %}
