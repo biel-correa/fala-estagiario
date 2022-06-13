@@ -1,0 +1,61 @@
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Fazer postagem</h5>
+                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <input type="text" id="author" class="form-control mb-2" placeholder="Nome">
+                <textarea id="content" maxlength="200" class="form-control" placeholder="Conteúdo"></textarea>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                <button type="button" class="btn btn-success" onclick="send()">Salvar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% block script %}
+    <script>
+        function validate(author, content) {
+            if (author.length == 0) {
+                alert('Preencha o nome');
+                return false;
+            }
+            if (content.length == 0) {
+                alert('Preencha o conteúdo');
+                return false;
+            }
+            if (content.length > 200) {
+                alert('Conteúdo muito longo');
+                return false;
+            }
+            return true;
+        }
+
+        function send() {
+            var author = $('#author').val();
+            var content = $('#content').val();
+
+            if (!validate(author, content)) {
+                return;
+            }
+
+            $.ajax({
+                url: '{{ url_for("save_post") }}',
+                type: 'POST',
+                data: {
+                    author: author,
+                    content: content
+                },
+                success: function(data) {
+                    location.reload();
+                }
+            });
+        }
+    </script>
+{% endblock %}

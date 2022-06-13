@@ -12,10 +12,15 @@
 
 {% block content %}
 <div class="container">
-    <div class="row">
+    <div class="d-flex justify-content-between">
         <h1>Fala Estagiário</h1>
+        <div class="button-container p-2 d-flex align-items-center">
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                Fazer Postagem
+            </button>
+        </div>
     </div>
-    <div class="d-flex">
+    <div class="d-flex flex-wrap">
         {% for post in posts %}
         <div class="card m-2">
             <div class="card-body">
@@ -29,4 +34,5 @@
         {% endfor %}
     </div>
 </div>
+{% include 'post-modal.html' %}
 {% endblock %}
