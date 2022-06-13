@@ -2,10 +2,31 @@
 
 {% block title %}Home{% endblock %}
 
+{% block style %}
+    <style>
+        .card {
+            min-width: 18rem;
+        }
+    </style>
+{% endblock %}
+
 {% block content %}
 <div class="container">
     <div class="row">
         <h1>Fala Estagiário</h1>
+    </div>
+    <div class="d-flex">
+        {% for post in posts %}
+        <div class="card m-2">
+            <div class="card-body">
+                <h5 class="card-title">{{post.author}}</h5>
+                <p class="card-text">{{post.content}}</p>
+            </div>
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item">Likes: {{post.likes}} - {{post.get_date()}}</li>
+              </ul>
+        </div>
+        {% endfor %}
     </div>
 </div>
 {% endblock %}
