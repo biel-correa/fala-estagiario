@@ -22,17 +22,39 @@
     </div>
     <div class="d-flex flex-wrap">
         {% for post in posts %}
-        <div class="card m-2">
+        <div class="card m-2" id="post-{{post.id}}">
             <div class="card-body">
                 <h5 class="card-title">{{post.author}}</h5>
                 <p class="card-text">{{post.content}}</p>
             </div>
             <ul class="list-group list-group-flush">
-                <li class="list-group-item">Likes: {{post.likes}} - {{post.get_date()}}</li>
-              </ul>
+                <li class="list-group-item">Likes: <span class="post-likes">{{post.likes}}</span> - {{post.get_date()}}</li>
+                <li class="list-group-item"><button onclick="like('{{url_for('like_post', id=post.id)}}', '{{post.id}}')" class="btn btn-primary">Like</button></li>
+            </ul>
         </div>
         {% endfor %}
     </div>
 </div>
 {% include 'post-modal.html' %}
+{% block script %}
+    <script>
+        function like(url, id) {
+            $.ajax({
+                url: url,
+                type: 'POST',
+                success: function(data) {
+                    updateLikes(id);
+                },
+                error: function(error) {
+                    alert(error)
+                }
+            });
+        }
+        function updateLikes(id) {
+            let post = $('#post-' + id + ' .post-likes')[0];
+            let likes = parseInt(post.innerText);
+            post.innerText = likes + 1;
+        }
+    </script>
+{% endblock %}
 {% endblock %}
